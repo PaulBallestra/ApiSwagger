@@ -11,10 +11,11 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id(); //ID
-            $table->string('body'); //BODY
-            $table->timestamps('created_at'); //CREATED_AT
-            $table->timestamps('updated_at'); //UPDATED_AT
-            $table->boolean('completed'); //COMPLETED
+            $table->integer('user_id')->nullable();
+            $table->string('body')->nullable(); //BODY
+            $table->timestamp('created_at')->nullable(); //CREATED_AT
+            $table->timestamp('updated_at')->nullable(); //UPDATED_AT
+            $table->boolean('completed')->nullable(); //COMPLETED
         });
     }
 
