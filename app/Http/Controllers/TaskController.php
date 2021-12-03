@@ -125,7 +125,7 @@ class TaskController extends Controller
 
         //401 UNAUTHENTICATED GÉRÉ PAR SANCTUM
 
-        $tasks = Task::where('user_id', Auth()->user()->id)->get();
+        $tasks = Task::where('user_id', Auth()->user()->id)->orderBy('updated_at', 'desc')->orderBy('created_at', 'asc')->get();
 
         return response()->json([
             'tasks' => $tasks
