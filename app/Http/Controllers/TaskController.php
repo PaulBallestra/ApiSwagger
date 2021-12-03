@@ -32,6 +32,56 @@ class TaskController extends Controller
 
     }
 
+    //FUNCTION UPDATE TASK ID
+    public function update(Request $request, $id){
+
+        //401 UNAUTHENTICATED GÉRÉ PAR SANCTUM
+
+        //422 GÉRÉ PAR SANCTUM
+        $request->validate([
+            'body' => 'required',
+            'completed' => 'required'
+        ]);
+
+        //On recup la tache
+        $ifTaskExists = Task::where('id', $id)->exists();
+
+        //CHECK IF EXIST 404
+        if(!$ifTaskExists){
+            return response()->json([
+                'errors' => "La tâche n'existe pas."
+            ], 404);
+        }
+
+        $task = Task::where('id', $id)->first();
+
+        //CHECK IF USER CAN USE THAT TASK 403
+        if($task->user_id !== $request->user()->id){
+            return response()->json([
+                'errors' => "Accès à la tâche non autorisé."
+            ], 403);
+        }
+
+        //Update de la task
+        $updatedTask = Task::find($id);
+
+        $updatedTask->body = $request->body;
+        $updatedTask->completed = $request->completed;
+
+        $updatedTask->save();
+
+        //STATUS 200 COOL
+        return response()->json([
+            'id' => $updatedTask->id,
+            'created_at' => $updatedTask->created_at,
+            'updated_at' => $updatedTask->updated_at,
+            'body' => $updatedTask->body,
+            'completed' => $updatedTask->done,
+            'user' => Auth()->user()
+        ], 200);
+
+    }
+
 
     //FUNCTION DELETE TASK ID
     public function delete(Request $request, $id){
