@@ -23,3 +23,6 @@ Route::middleware('auth:sanctum')->post('auth/task/{id}', [TaskController::class
 
 //DELETE TASK
 Route::middleware('auth:sanctum')->delete('auth/task/{id}', [TaskController::class, 'delete']);
+
+//SHOW ALL TASKS
+Route::middleware('auth:sanctum')->get('auth/tasks', [TaskController::class, 'showAll']);

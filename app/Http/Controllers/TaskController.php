@@ -82,7 +82,6 @@ class TaskController extends Controller
 
     }
 
-
     //FUNCTION DELETE TASK ID
     public function delete(Request $request, $id){
 
@@ -118,6 +117,19 @@ class TaskController extends Controller
             'completed' => $task->completed,
             'user' => Auth()->user()
         ], 200);
+
+    }
+
+    //FUNCTION SHOW ALL TASK OF USER
+    public function showAll(Request $request){
+
+        //401 UNAUTHENTICATED GÉRÉ PAR SANCTUM
+
+        $tasks = Task::where('user_id', Auth()->user()->id)->get();
+
+        return response()->json([
+            'tasks' => $tasks
+        ], 201);
 
     }
 }
