@@ -45,4 +45,32 @@ class ApiTokenController extends Controller
 
     }
 
+
+    //FUNCTION LOGIN
+    public function login(Request $request)
+    {
+        //Validation champs 422
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        //Si l'user n'existe pas 401
+        if(!$user || !Hash::check($request->password, $user->password)){
+            return response()->json(['errors' => "Identifiants inconnus ou erronés"], 401);
+        }
+
+        //Suppresion de l'ancien token
+        $user->tokens()->where('tokenable_id', $user->id)->delete();
+
+        //Création du nouveau token
+        $token = $user->createToken($request->email)->plainTextToken;
+
+        return response()->json([
+            'token' => $token
+        ], 200);
+    }
+
 }

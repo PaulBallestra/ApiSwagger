@@ -10,3 +10,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //REGISTER
 Route::post('auth/register', [ApiTokenController::class, 'register']);
+
+//LOGIN
+Route::post('auth/login', [ApiTokenController::class, 'login']);
