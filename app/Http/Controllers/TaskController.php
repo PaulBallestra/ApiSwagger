@@ -76,7 +76,7 @@ class TaskController extends Controller
             'created_at' => $updatedTask->created_at,
             'updated_at' => $updatedTask->updated_at,
             'body' => $updatedTask->body,
-            'completed' => $updatedTask->done,
+            'completed' => $updatedTask->completed,
             'user' => Auth()->user()
         ], 200);
 
