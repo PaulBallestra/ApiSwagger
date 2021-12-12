@@ -120,7 +120,7 @@ class TaskController extends Controller
 
     }
 
-    //FUNCTION SHOW ALL TASK OF USER
+    //FUNCTION SHOW ALL TASK OF USER UPDATED_AT FIRST THEN CREATED_AT
     public function showAll(Request $request){
 
         //401 UNAUTHENTICATED GÉRÉ PAR SANCTUM
